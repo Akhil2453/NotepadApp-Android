@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         editText = (EditText)findViewById(R.id.editText2);
+        editText.setText(Open("Note1.txt"));
 
     }
 
@@ -62,6 +63,34 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
         }
     }
+
+    public boolean FileExists(String fname){
+        File file = getBaseContext().getFileStreamPath(fname);
+        return file.exists();
+    }
+
+    public String Open(String fileName) {
+        String content = "";
+        if (FileExists(fileName)) {
+            try {
+                InputStream in = openFileInput(fileName);
+                if ( in != null) {
+                    InputStreamReader tmp = new InputStreamReader( in );
+                    BufferedReader reader = new BufferedReader(tmp);
+                    String str;
+                    StringBuilder buf = new StringBuilder();
+                    while ((str = reader.readLine()) != null) {
+                        buf.append(str + "\n");
+                    } in .close();
+                    content = buf.toString();
+                }
+            } catch (java.io.FileNotFoundException e) {} catch (Throwable t) {
+                Toast.makeText(this, "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
+            }
+        }
+        return content;
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
