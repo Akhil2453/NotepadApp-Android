@@ -11,24 +11,15 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 public class MainActivity extends AppCompatActivity {
 
     EditText editText;
-
-    public void Save(String fileName) {
-        try {
-            OutputStreamWriter out =
-                    new OutputStreamWriter(openFileOutput(fileName, 0));
-            out.write(editText.);
-            out.close();
-            Toast.makeText(this, "Note Saved!", Toast.LENGTH_SHORT).show();
-        } catch (Throwable t) {
-            Toast.makeText(this, "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
-        }
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        editText = (EditText)findViewById(R.id.editText2)
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -44,8 +34,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Save File", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                Save("Note1.txt");
             }
         });
+
+
+        editText = (EditText)findViewById(R.id.editText2);
+
     }
 
     @Override
@@ -53,6 +48,19 @@ public class MainActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
+    }
+
+
+    public void Save(String fileName) {
+        try {
+            OutputStreamWriter out =
+                    new OutputStreamWriter(openFileOutput(fileName, 0));
+            out.write(editText.getId());
+            out.close();
+            Toast.makeText(this, "Note Saved!", Toast.LENGTH_SHORT).show();
+        } catch (Throwable t) {
+            Toast.makeText(this, "Exception: " + t.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
